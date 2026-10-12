@@ -1,4 +1,273 @@
 # React + Vite
+# 💊 Pharmacy Management System
+
+A full-stack web application developed to manage pharmacy operations, including medicine inventory, customer records, sales and billing, and stock monitoring. The system provides a centralized interface to maintain pharmacy records and track inventory efficiently.
+
+## 📌 Project Overview
+
+The Pharmacy Management System is built using React.js for the frontend, Java Spring Boot for the backend, and MySQL for database management. The frontend communicates with the backend through REST APIs using Axios.
+
+The application allows users to manage medicines and customers, create sales, calculate billing totals, automatically update medicine quantities after sales, and monitor low-stock and expired medicines.
+
+## 🛠️ Technologies Used
+
+**Frontend**
+- React.js
+- JavaScript (JSX)
+- Vite
+- Axios
+- HTML and CSS
+
+**Backend**
+- Java
+- Spring Boot
+- Spring Data JPA
+- Hibernate
+- Maven
+- REST APIs
+
+**Database**
+- MySQL
+
+**Testing and Development Tools**
+- Visual Studio Code
+- Postman
+- Git and GitHub
+
+## ✨ Features Implemented
+
+### 🔐 Login and Logout
+- Login form connected to the backend.
+- Credential verification through the login API.
+- Username stored in browser `localStorage` after successful login.
+- Logout functionality.
+
+### 📊 Dashboard
+Displays:
+- Total medicines
+- Total customers
+- Total sales
+- Low-stock medicine count
+- Expired-medicine count
+
+Also provides quick actions to access medicine management, customer management, and sales.
+
+### 💊 Medicine Management
+- Add new medicines.
+- View medicine inventory.
+- Edit medicine details.
+- Delete medicines.
+- Search medicines by name.
+- Display medicine price and quantity.
+- Highlight low-stock quantities.
+- Store batch number, manufacturer, category, and expiry date.
+
+### 👥 Customer Management
+- Add customer records.
+- View customer information.
+- Edit customer details.
+- Delete customer records.
+- Search customer information.
+- Store name, phone number, email, and address.
+
+### 🧾 Sales and Billing
+- Select a customer.
+- Select medicines from available inventory.
+- Enter purchase quantities.
+- Add medicines to a cart.
+- Calculate subtotals and total amount.
+- Remove items from the cart.
+- Validate requested quantities against available stock.
+- Complete sales through the backend.
+- Display sales history.
+- Update displayed stock after a successful sale.
+
+### ⚠️ Inventory Alerts
+- Retrieve and display low-stock medicines.
+- Retrieve and display expired medicines.
+- Show alert counts.
+- Refresh alert information.
+
+## 🏗️ System Architecture
+
+```text
+             User
+              |
+              v
+       React.js Frontend
+              |
+            Axios
+              |
+              v
+     Spring Boot REST APIs
+              |
+         Service Layer
+              |
+       Repository Layer
+              |
+              v
+         MySQL Database
+```
+
+## 📁 Project Structure
+
+The project is organized into separate frontend and backend applications.
+
+```text
+pharmacy-management-system/
+├── backend/
+│   └── pharmacy-backend/
+│       ├── src/
+│       ├── pom.xml
+│       └── mvnw.cmd
+│
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   │   ├── Login.jsx
+    │   │   ├── Medicines.jsx
+    │   │   ├── Customers.jsx
+    │   │   ├── Sales.jsx
+    │   │   └── Alerts.jsx
+    │   ├── api.js
+    │   ├── App.jsx
+    │   ├── App.css
+    │   ├── index.css
+    │   └── main.jsx
+    ├── package.json
+    └── vite.config.js
+```
+
+## 🗄️ Database Design
+
+**Database name:** `pharmacy_management_db`
+
+The application uses the following main tables:
+
+| Table | Purpose |
+|---|---|
+| `users` | Stores user account records |
+| `medicines` | Stores medicine and inventory details |
+| `customers` | Stores customer information |
+| `sales` | Stores completed sales and totals |
+| `sale_items` | Stores individual items belonging to each sale |
+
+Relationships connect sales with customers and sale items with sales and medicines.
+
+## 🔌 Main REST API Endpoints
+
+The backend runs locally at:
+
+`http://localhost:8080`
+
+The API base URL is:
+
+`http://localhost:8080/api`
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/medicines` | Retrieve medicines |
+| GET | `/api/medicines/{id}` | Retrieve a medicine by ID |
+| POST | `/api/medicines` | Add a medicine |
+| PUT | `/api/medicines/{id}` | Update a medicine |
+| DELETE | `/api/medicines/{id}` | Delete a medicine |
+| GET | `/api/medicines/low-stock` | Retrieve low-stock medicines |
+| GET | `/api/medicines/expired` | Retrieve expired medicines |
+| GET | `/api/customers` | Retrieve customers |
+| POST | `/api/customers` | Add a customer |
+| PUT | `/api/customers/{id}` | Update a customer |
+| DELETE | `/api/customers/{id}` | Delete a customer |
+| GET | `/api/sales` | Retrieve sales history |
+| POST | `/api/sales?customerId={id}` | Create a sale |
+| POST | `/api/users/login` | Verify login credentials |
+| GET | `/api/dashboard/summary` | Retrieve dashboard statistics |
+
+## 🚀 How to Run the Project
+
+### Prerequisites
+- Java JDK
+- Node.js and npm
+- MySQL Server
+- Git
+- Visual Studio Code
+
+### 1. Configure MySQL
+Start MySQL and ensure the database `pharmacy_management_db` and required tables exist.
+
+Configure the database connection in the backend's `application.properties` file. Keep database credentials private.
+
+### 2. Start the Backend
+
+Open a terminal and run:
+
+```powershell
+cd C:\project\pharmacy-management-system\backend\pharmacy-backend
+.\mvnw.cmd spring-boot:run
+```
+
+Wait for Spring Boot to start on port `8080`.
+
+### 3. Start the Frontend
+
+Open a second terminal and run:
+
+```powershell
+cd C:\project\pharmacy-management-system\frontend
+npm install
+npm run dev
+```
+
+Open the local URL displayed by Vite, normally:
+
+`http://localhost:5173/`
+
+Keep both the backend and frontend running while using the application.
+
+## 🧪 Testing Performed
+
+The frontend was functionally checked for:
+- Login and logout.
+- Dashboard statistics.
+- Medicine listing, searching, adding, editing, and deleting.
+- Customer management.
+- Sales cart and total calculation.
+- Sales history.
+- Stock reduction after a completed sale.
+- Low-stock and expired-medicine alerts.
+
+Postman was also used to test backend REST APIs, including retrieving the medicine list and retrieving a medicine by ID.
+
+## 🔒 Security Notes
+
+- Do not commit real database passwords or secret configuration files to GitHub.
+- The current login flow stores a username in `localStorage`; this is not a substitute for secure authentication.
+- Production use would require stronger authentication, password hashing, authorization, and appropriate HTTPS configuration.
+
+## 🔮 Future Enhancements
+
+- Secure authentication using Spring Security.
+- Role-based access control.
+- PDF invoice generation.
+- Advanced sales reports and analytics.
+- Automated stock and expiry notifications.
+- Cloud deployment.
+
+## 🎯 Project Objective
+
+The objective of this project is to simplify pharmacy operations by providing a centralized system for managing medicine inventory, customer records, sales, billing, and stock alerts.
+
+## 👨‍💻 Project Information
+
+**Project Name:** Pharmacy Management System  
+**Project Type:** Java Full Stack Web Application  
+**Frontend:** React.js and Vite  
+**Backend:** Java Spring Boot  
+**Database:** MySQL  
+**API Communication:** REST APIs and Axios
+
+---
+
+Developed as a full-stack application to improve the organization and efficiency of pharmacy inventory and sales management.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
